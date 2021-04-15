@@ -1,0 +1,143 @@
+﻿<Window x:Class="s4_oop_6_7_8_9.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:s4_oop_6_7_8_9"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Типа хедер -->
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Создать"/>
+                    <MenuItem Header="Открыть"/>
+                    <MenuItem Header="Сохранить"/>
+                    <MenuItem Header="Очистить"/>
+                </MenuItem>
+                <MenuItem Header="Правка">
+                    <MenuItem Header="Отменить"/>
+                    <MenuItem Header="Повторить"/>
+                </MenuItem>
+                <MenuItem Header="Поиск"/>
+            </Menu>
+            
+            <TextBlock Text="Каталог товаров" Grid.Row="1" Grid.Column="0"/>
+            <Button Content="Перейти в режим редактирования" Grid.Row="2" Grid.Column="0"></Button>
+            
+            <!-- Кнопки, отображаемые для редактирования конкретного эл-та -->
+            <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" >Подробная информация</Button>
+                <Button Grid.Column="1" >Изменить запись</Button>
+                <Button Grid.Column="2" >Удалить запись</Button>
+
+            </Grid>
+            
+            <!-- Сортировка датагрида -->
+            <GroupBox Header="Сортировать по: " Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
+                <ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem Content="Названию"/>
+                    <ListBoxItem Content="Цене"/>
+                    <ListBoxItem Content="Количеству"/>
+                    <ListBoxItem Content="Высоте растения"/>
+                    <ListBoxItem Content="Диаметру горшка"/>
+                </ListBox>
+            </GroupBox>
+        </Grid>
+
+        <!-- Непосредственно контейнер для данных -->
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" Grid.ColumnSpan="5">
+            <DataGrid>
+                данные
+            </DataGrid>
+        </ScrollViewer>
+
+        <!-- Фильтры -->
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
+            <Expander Header="Категория">
+                <StackPanel>
+                    <CheckBox Content="Цветущие"/>
+                    <CheckBox Content="Лиственные"/>
+                    <CheckBox Content="Плодовые"/>
+                    <CheckBox Content="Насекомоядные"/>
+                    <CheckBox Content="Бонсай"/>
+                    <CheckBox Content="Суккуленты"/>
+                    <CheckBox Content="Грунт"/>
+                    <CheckBox Content="Аксесуары"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Цена, руб">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70"/>
+                    <TextBlock Text="-"/>
+                    <TextBox MinWidth="70"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Высота растения, см">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70"/>
+                    <TextBlock Text="-"/>
+                    <TextBox MinWidth="70"/>
+                </StackPanel>
+            </Expander>
+            <Expander Header="Диаметр горшка, см">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70"/>
+                    <TextBlock Text="-"/>
+                    <TextBox MinWidth="70"/>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Наличие">
+                <StackPanel>
+                    <CheckBox Content="В магазине"/>
+                    <CheckBox Content="На складе"/>
+                    <CheckBox Content="Под заказ"/>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+        
+    </Grid>
+</Window>

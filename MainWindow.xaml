@@ -76,7 +76,7 @@
                             <StackPanel Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    <ListBoxItem Content="Названию"/>
+                    <ListBoxItem Content="Названию" IsSelected="True"/>
                     <ListBoxItem Content="Цене"/>
                     <ListBoxItem Content="Количеству"/>
                     <ListBoxItem Content="Высоте растения"/>

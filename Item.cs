@@ -13,10 +13,10 @@ namespace s4_oop_6_7_8_9
         string ShortName { get; set; }
         string FullName { get; set; }
         string Category { get; set; }
-        string Price { get; set; }
+        int Price { get; set; }
         string Availability { get; set; }
-        string Height { get; set; }
-        string Diameter { get; set; }
+        int Height { get; set; }
+        int Diameter { get; set; }
         string Description { get; set; }
     }
 
@@ -25,11 +25,11 @@ namespace s4_oop_6_7_8_9
         string shortName;
         string fullName;
         string category;
-        string price;
         string availability;
-        string height;
-        string diameter;
         string description;
+        int price;
+        int height;
+        int diameter;
 
         public string ShortName 
         {
@@ -58,7 +58,7 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Category");
             } 
         }
-        public string Price 
+        public int Price 
         {
             get => price; 
             set
@@ -76,7 +76,7 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Availability");
             } 
         }
-        public string Height 
+        public int Height 
         {
             get => height; 
             set
@@ -85,7 +85,7 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Height");
             }
         }
-        public string Diameter 
+        public int Diameter 
         {
             get => diameter; 
             set

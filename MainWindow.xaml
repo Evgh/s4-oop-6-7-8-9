@@ -65,7 +65,7 @@
             </Menu>
             
             <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0"/>
-            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}">
+            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1" Command="New">
                 <Image Source="resources/add.png"/>
             </Button>
 
@@ -141,48 +141,53 @@
         <StackPanel x:Name="stackPanelFilters" Orientation="Vertical" Grid.Column="0" Grid.Row="1" >
             <Expander x:Name="expanderCategory" Header="Категория" IsExpanded="True">
                 <StackPanel>
-                    <CheckBox x:Name="categoryBlooming" Content="Цветущие"/>
-                    <CheckBox x:Name="categoryDeciduous" Content="Лиственные"/>
-                    <CheckBox x:Name="categoryFruit" Content="Плодовые"/>
-                    <CheckBox x:Name="categoryPredator" Content="Насекомоядные"/>
-                    <CheckBox x:Name="categoryBonsai" Content="Бонсай"/>
-                    <CheckBox x:Name="categorySucculent" Content="Суккуленты"/>
-                    <CheckBox x:Name="categoryPrimiting" Content="Грунт"/>
-                    <CheckBox x:Name="categoryAccessories" Content="Аксесуары"/>
+                    <CheckBox x:Name="categoryBlooming" Content="Цветущие" DataContext="{Binding Category}" IsChecked="{Binding Path=Blooming, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryDeciduous" Content="Лиственные" DataContext="{Binding Category}" IsChecked="{Binding Path=Decidious, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryFruit" Content="Плодовые" DataContext="{Binding Category}" IsChecked="{Binding Path=Fruit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryPredator" Content="Насекомоядные" DataContext="{Binding Category}" IsChecked="{Binding Path=Predator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryBonsai" Content="Бонсай" DataContext="{Binding Category}" IsChecked="{Binding Path=Bonsai, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categorySucculent" Content="Суккуленты" DataContext="{Binding Category}" IsChecked="{Binding Path=Succulent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryPrimiting" Content="Грунт" DataContext="{Binding Category}" IsChecked="{Binding Path=Primiting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="categoryAccessories" Content="Аксессуары" DataContext="{Binding Category}" IsChecked="{Binding Path=Accessories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
             <Expander x:Name="expanderPrice" Header="Цена, руб" IsExpanded="True">
                 <StackPanel x:Name="stackPanelPrice" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinPrice" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMinPrice" MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MinPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxPrice" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMaxPrice" MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MaxPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
 
             <Expander x:Name="expanderHeight" Header="Высота растения, см" IsExpanded="True">
                 <StackPanel x:Name="stackPanelHeight" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinHeight" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMinHeight" MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MinHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxHeight" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMaxHeight" MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MaxHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
             <Expander x:Name="expanderDiameter" Header="Диаметр горшка, см" IsExpanded="True">
                 <StackPanel x:Name="stackPanelDiameter" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinDiameter" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMinDiameter" MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MinDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxDiameter" MinWidth="70"/>
+                    <TextBox x:Name="textBoxMaxDiameter" MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
             <Expander x:Name="expanderAvailability" Header="Наличие" IsExpanded="True">
                 <StackPanel x:Name="stackPanelAvailability">
-                    <CheckBox x:Name="checkBoxAvailabilityShop" Content="В магазине"/>
-                    <CheckBox x:Name="checkBoxAvailabilityWherehouse" Content="На складе"/>
-                    <CheckBox x:Name="checkBoxAvailabilityOrder" Content="Под заказ"/>
+                    <CheckBox x:Name="checkBoxAvailabilityShop" Content="В наличии" DataContext="{Binding Availability}" IsChecked="{Binding Path=Available, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox x:Name="checkBoxAvailabilityOrder" Content="Под заказ" DataContext="{Binding Availability}" IsChecked="{Binding Path=Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
+
+            <Button x:Name="buttonApplyFilters" Content="Применить" Command="{Binding FilterCommand}">
+                <!--<Button.CommandParameter>
+                    <vm:StretchingModel>
+                </Button.CommandParameter>-->
+            </Button>
         </StackPanel>
         
     </Grid>

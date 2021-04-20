@@ -13,9 +13,15 @@ namespace s4_oop_6_7_8_9
 {
     class ViewModel : INotifyPropertyChanged
     {
-        private Item selectedItem;
+        public ObservableCollection<Item> Items { get; set; }
+        public IFilter Category { get; set; }
+        public IFilter Price { get; set; }
+        public IFilter Height { get; set; }
+        public IFilter Diameter { get; set; }
+        public IFilter Availability { get; set; }
 
-        public ObservableCollection<Item> Items { get; set; } 
+
+        private Item selectedItem;
         public Item SelectedItem
         {
             get => selectedItem;
@@ -48,13 +54,39 @@ namespace s4_oop_6_7_8_9
             }
         }
 
+        private RelayCommand filterCommand; 
+        public RelayCommand FilterCommand
+        {
+            get
+            {
+                return filterCommand ?? 
+                    (filterCommand = new RelayCommand(
+                        obj =>
+                        {
+                            MessageBox.Show($"{Category.IsApropriate(selectedItem)}");
+                        },
+                        obj =>
+                        {
+                            return Items.Count > 0;
+                        }));
+            }
+        }
+
+
         public ViewModel()
         {
             Items = new ObservableCollection<Item>
             {
-                 new Plant { FullName = "Красивый цветок", ShortName = "Цветок", Category="Цветы", Height="20", Diameter="15", Price="20", Availability="Нет в наличии", Description="Красивый"},
-                 new Plant { FullName = "Колючий кактус", ShortName = "Кактус", Category="Кактусы", Height="15", Diameter="7", Price="9", Availability="5", Description="Колючий"}
+                 new Plant { FullName = "Красивый цветок", ShortName = "Цветок", Category="Цветущие", Height=20, Diameter=15, Price=20, Availability="Нет в наличии", Description="Красивый"},
+                 new Plant { FullName = "Колючий кактус", ShortName = "Кактус", Category="Суккуленты", Height=15, Diameter=7, Price=9, Availability="5", Description="Колючий"}
             };
+
+            // инициализируем фильтры 
+            Category = new CategoryFilter();
+            Price = new PriceFilter();
+            Height = new HeigthFilter();
+            Diameter = new DiameterFilter();
+            Availability = new AvailabilityFilter();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -65,3 +97,5 @@ namespace s4_oop_6_7_8_9
         }
     }
 }
+
+

@@ -333,7 +333,6 @@ namespace s4_oop_6_7_8_9
         public bool IsActive() 
         {
             return Blooming || Decidious || Fruit || Predator || Bonsai || Succulent || Primiting || Accessories;    
-
         }
 
         public bool IsApropriate(Item item)

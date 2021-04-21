@@ -183,11 +183,12 @@
                 </StackPanel>
             </Expander>
 
-            <Button x:Name="buttonApplyFilters" Content="Применить" Command="{Binding FilterCommand}">
-                <!--<Button.CommandParameter>
+            <Button x:Name="buttonApplyFilters" Content="Применить" Command="{Binding FilterCommand}"/>
+            <Button x:Name="buttonClearFilters" Content="Сбросить фильтры" Command="{Binding ClearFilterCommand}"/>
+            <!--<Button.CommandParameter>
                     <vm:StretchingModel>
                 </Button.CommandParameter>-->
-            </Button>
+
         </StackPanel>
         
     </Grid>

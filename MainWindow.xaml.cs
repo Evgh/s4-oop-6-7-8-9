@@ -21,7 +21,7 @@ namespace s4_oop_6_7_8_9
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<Item> itemsSource;
+        //ObservableCollection<Item> itemsSource;
 
         public MainWindow()
         {
@@ -31,6 +31,11 @@ namespace s4_oop_6_7_8_9
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("Команда запущена из " + e.Source.ToString());
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show($"{dataGridMain.RowStyle.Visibility}");
         }
 
         //private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

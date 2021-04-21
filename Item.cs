@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
-
+using System.Windows.Controls;
 namespace s4_oop_6_7_8_9
 {
     public interface Item : INotifyPropertyChanged
     {
+        bool ItemVisibility { get; set; }
+
         string ShortName { get; set; }
         string FullName { get; set; }
         string Category { get; set; }
@@ -22,15 +24,18 @@ namespace s4_oop_6_7_8_9
 
     class Plant : Item
     {
-        string shortName;
-        string fullName;
-        string category;
-        string availability;
-        string description;
-        int price;
-        int height;
-        int diameter;
+        bool itemVisibility = true;
+        public bool ItemVisibility
+        {
+            get => itemVisibility;
+            set
+            {
+                itemVisibility = value;
+                OnPropertyChanged("ItemVisibility");
+            }
+        }
 
+        string shortName;
         public string ShortName 
         {
             get => shortName; 
@@ -40,6 +45,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("ShortName");
             } 
         }
+
+        string fullName;
         public string FullName 
         {
             get => fullName;
@@ -49,6 +56,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("FullName");
             }
         }
+
+        string category;
         public string Category 
         {
             get => category; 
@@ -58,6 +67,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Category");
             } 
         }
+
+        int price;
         public int Price 
         {
             get => price; 
@@ -65,8 +76,10 @@ namespace s4_oop_6_7_8_9
             {
                 price = value;
                 OnPropertyChanged("Price");
-            } 
+            }
         }
+
+        string availability;
         public string Availability 
         {
             get => availability; 
@@ -76,6 +89,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Availability");
             } 
         }
+
+        int height;
         public int Height 
         {
             get => height; 
@@ -85,6 +100,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Height");
             }
         }
+
+        int diameter;
         public int Diameter 
         {
             get => diameter; 
@@ -94,6 +111,8 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Diameter");
             } 
         }
+
+        string description;
         public string Description 
         {
             get => description; 
@@ -103,6 +122,7 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Description");
             } 
         }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -27,7 +27,6 @@ namespace s4_oop_6_7_8_9
         public IFilter Availability { get => filters[4]; }
 
 
-        private ObservableCollection<Item> allItems;
         private ObservableCollection<Item> items;
         public ObservableCollection<Item> Items 
         { 
@@ -38,7 +37,6 @@ namespace s4_oop_6_7_8_9
                 OnPropertyChanged("Items");
             }  
         }
-
 
         private Item selectedItem;
         public Item SelectedItem
@@ -82,29 +80,20 @@ namespace s4_oop_6_7_8_9
                     (filterCommand = new RelayCommand(
                         obj =>
                         {
-                            //StringBuilder message = new StringBuilder("");
-
-                            ObservableCollection<Item> buff = new ObservableCollection<Item> { };
-                            foreach (Item item in allItems)
-                                buff.Add(item);
-
-                            foreach (IFilter filter in filters)
+                            foreach (Item item in items)
                             {
-                                if (filter.IsActive())
+                                bool isVisible = true;
+
+                                foreach (IFilter filter in filters)
                                 {
-                                    
-                                    for ( int i = buff.Count-1; i >= 0; i--)
+                                    if (filter.IsActive())
                                     {
-                                        Item item = buff[i];
-                                        if (!filter.IsApropriate(item))
-                                        {
-                                            buff.Remove(item);
-                                        }
+                                        isVisible = isVisible && filter.IsApropriate(item);
                                     }
                                 }
+
+                                item.ItemVisibility = isVisible;
                             }
-                            Items = buff;
-                            //MessageBox.Show(message.ToString());
                         }));
             }
         }
@@ -118,19 +107,22 @@ namespace s4_oop_6_7_8_9
                     (clearFilterCommand = new RelayCommand(
                         obj =>
                         {
-                            Items = allItems;
+                            foreach (Item item in Items)
+                            {
+                                item.ItemVisibility = true;
+                            }
+
                         }));
             }
         }
 
         public ViewModel()
         {
-            allItems = new ObservableCollection<Item>
+            Items = new ObservableCollection<Item>
             {
                  new Plant { FullName = "Красивый цветок", ShortName = "Цветок", Category="Цветущие", Height=20, Diameter=15, Price=20, Availability="Нет в наличии", Description="Красивый"},
                  new Plant { FullName = "Колючий кактус", ShortName = "Кактус", Category="Суккуленты", Height=15, Diameter=7, Price=9, Availability="5", Description="Колючий"}
             };
-            Items = allItems;
 
         }
 

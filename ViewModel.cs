@@ -13,7 +13,7 @@ using System.Windows.Controls;
 
 namespace s4_oop_6_7_8_9
 {
-    class ViewModel : INotifyPropertyChanged
+    partial class ViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Item> items;
         public ObservableCollection<Item> Items
@@ -37,11 +37,11 @@ namespace s4_oop_6_7_8_9
             }
         }
 
-        private readonly List<IFilter> filters = new List<IFilter> { 
-                                                            new CategoryFilter(), 
-                                                            new PriceFilter(), 
-                                                            new HeigthFilter(), 
-                                                            new DiameterFilter(), 
+        private readonly List<IFilter> filters = new List<IFilter> {
+                                                            new CategoryFilter(),
+                                                            new PriceFilter(),
+                                                            new HeigthFilter(),
+                                                            new DiameterFilter(),
                                                             new AvailabilityFilter() };
         public IFilter Category { get => filters[0]; }
         public IFilter Price { get => filters[1]; }
@@ -49,15 +49,12 @@ namespace s4_oop_6_7_8_9
         public IFilter Diameter { get => filters[3]; }
         public IFilter Availability { get => filters[4]; }
 
-        // private DialogState dialogState; 
-        // private DialogState {get; set;}
-
         private RelayCommand deleteCommand;
         public RelayCommand DeleteCommand
         {
             get
             {
-                return deleteCommand ?? 
+                return deleteCommand ??
                     (deleteCommand = new RelayCommand(
                         obj =>
                         {
@@ -66,20 +63,20 @@ namespace s4_oop_6_7_8_9
                             {
                                 Items.Remove(item);
                             }
-                        }, 
-                        obj => 
+                        },
+                        obj =>
                         {
                             return Items.Count > 0;
                         }));
             }
         }
 
-        private RelayCommand filterCommand; 
+        private RelayCommand filterCommand;
         public RelayCommand FilterCommand
         {
             get
             {
-                return filterCommand ?? 
+                return filterCommand ??
                     (filterCommand = new RelayCommand(
                         obj =>
                         {
@@ -107,14 +104,13 @@ namespace s4_oop_6_7_8_9
             get
             {
                 return clearFilterCommand ??
-                    (clearFilterCommand = new RelayCommand(
+                    (clearFilterCommand = new RelayCommand (
                         obj =>
                         {
-                            //foreach (Item item in Items)
-                            //{
-                            //    item.ItemVisibility = true;
-                            //}
-                            MessageBox.Show("ViewModel");
+                            foreach (Item item in Items)
+                            {
+                                item.ItemVisibility = true;
+                            }
                         }));
             }
         }
@@ -127,6 +123,7 @@ namespace s4_oop_6_7_8_9
                  new Plant { FullName = "Колючий кактус", ShortName = "Кактус", Category="Суккуленты", Height=15, Diameter=7, Price=9, Availability=5, Description="Колючий"}
             };
 
+            ToEditMode();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -142,7 +139,7 @@ namespace s4_oop_6_7_8_9
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string category = ((string)value);
-            switch (category) 
+            switch (category)
             {
                 case "Цветущие": return 0;
                 case "Лиственные": return 1;
@@ -169,7 +166,7 @@ namespace s4_oop_6_7_8_9
                 case 5: return "Суккуленты";
                 case 6: return "Грунт";
                 case 7: return "Аксессуары";
-                default: throw new Exception();
+                default: return "";
             }
         }
     }

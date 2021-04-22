@@ -10,6 +10,7 @@
 
     <Window.Resources>
         <local:CategoryToIntConverter x:Key="categoryConverter"/>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
     </Window.Resources>
     
     <Grid Margin="10">
@@ -23,22 +24,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--Место для кнопок перехода в разные состояния -->
+        <!--Место для кнопок перехода в разные состояния --> 
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Сохранить изменения" Grid.Column="0" Margin="10"/>
-            <Button Content="Отменить изменения" Grid.Column="1" Margin="10"/>
-            <Button Content="Удалитьзапись" Grid.Column="2" Margin="10"/>
+
+            <Button Content="Добавить запись" Grid.Column="0" Margin="10" Visibility="{Binding IsAddButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
+            <Button Content="Сбросить" Grid.Column="1" Margin="10" Visibility="{Binding IsResetButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
+
+            <Button Content="Сбросить изменения" Grid.Column="0" Margin="10" Visibility="{Binding IsSaveButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
+            <Button Content="Удалить запись" Grid.Column="1" Margin="10" 
+                    Visibility="{Binding IsDeleteButtonVisible, Converter={StaticResource booleanToVisibility}}" 
+                    Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
         </Grid>
 
         <!-- Непосредственно забинженные данные -->
         <Image Grid.Row="1" Grid.Column="0" Margin="10" Source="resources/add.png" Stretch="UniformToFill"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-            <TextBox x:Name="textBoxName" FontSize="30" Text="{Binding ShortName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBox x:Name="textBoxName" FontSize="30" Text="{Binding ShortName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBox x:Name="textBoxFullName" Margin="0 0 0 10" Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <DockPanel Margin="0 0 0 10">
@@ -48,7 +53,6 @@
             
             <TextBlock Text="Категория:"/>
             <ComboBox Margin="0 0 0 10" SelectedIndex="{Binding Category, Converter={StaticResource categoryConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                <!---->
                 <ComboBoxItem Content="Цветущие" />
                 <ComboBoxItem Content="Лиственные"/>
                 <ComboBoxItem Content="Плодовые"/>
@@ -79,8 +83,6 @@
                 <TextBlock Text="Количество:" Margin="0 0 10 0"/>
                 <TextBox Width="50" Text="{Binding Availability, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
-
-
         </StackPanel>
 
 

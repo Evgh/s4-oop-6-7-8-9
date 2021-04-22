@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:s4_oop_6_7_8_9"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" MinHeight="640" MinWidth="1136">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="myConverter"/>
     </Window.Resources>
 
     <Grid x:Name="gridMain">
-        <Grid.CommandBindings>
+        <!--<Grid.CommandBindings>
             <CommandBinding Command="New" Executed="NewCommand_Executed"/>
-        </Grid.CommandBindings>
+        </Grid.CommandBindings>-->
         <Grid.Resources>
             <ContextMenu  x:Key="DataRowContextMenu">
                 <MenuItem Header="Узнать подробности"/>
@@ -68,7 +68,7 @@
             </Menu>
             
             <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0"/>
-            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1" Command="New" Click="buttonAdd_Click">
+            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="buttonAdd_Click">
                 <Image Source="resources/add.png"/>
             </Button>
 

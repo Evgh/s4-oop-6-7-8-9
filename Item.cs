@@ -14,12 +14,13 @@ namespace s4_oop_6_7_8_9
 
         string ShortName { get; set; }
         string FullName { get; set; }
+        string Description { get; set; }
         string Category { get; set; }
+        int Availability { get; set; }
         int Price { get; set; }
-        string Availability { get; set; }
         int Height { get; set; }
         int Diameter { get; set; }
-        string Description { get; set; }
+        
     }
 
     class Plant : Item
@@ -57,6 +58,17 @@ namespace s4_oop_6_7_8_9
             }
         }
 
+        string description;
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged("Description");
+            }
+        }
+
         string category;
         public string Category 
         {
@@ -68,6 +80,17 @@ namespace s4_oop_6_7_8_9
             } 
         }
 
+        int availability;
+        public int Availability
+        {
+            get => availability;
+            set
+            {
+                availability = value;
+                OnPropertyChanged("Availability");
+            }
+        }
+
         int price;
         public int Price 
         {
@@ -77,17 +100,6 @@ namespace s4_oop_6_7_8_9
                 price = value;
                 OnPropertyChanged("Price");
             }
-        }
-
-        string availability;
-        public string Availability 
-        {
-            get => availability; 
-            set
-            {
-                availability = value;
-                OnPropertyChanged("Availability");
-            } 
         }
 
         int height;
@@ -112,16 +124,7 @@ namespace s4_oop_6_7_8_9
             } 
         }
 
-        string description;
-        public string Description 
-        {
-            get => description; 
-            set
-            {
-                description = value;
-                OnPropertyChanged("Description");
-            } 
-        }
+        
 
 
 

@@ -216,17 +216,16 @@ namespace s4_oop_6_7_8_9
 
         public bool IsApropriate(Item item)
         {
-            int buf;
             bool flag = false;
-            string availability = item.Availability;
+            int availability = item.Availability;
 
             if (available)
             {
-                flag = flag || int.TryParse(availability, out buf);
+                flag = flag || (availability > 0);
             }
             if (order)
             {
-                flag = flag || !int.TryParse(availability, out buf);
+                flag = flag || (availability == 0);
             }
 
             return flag;

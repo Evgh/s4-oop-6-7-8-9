@@ -35,7 +35,8 @@ namespace s4_oop_6_7_8_9
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show($"{dataGridMain.RowStyle.Visibility}");
+            ElementWindow elementWindow = new ElementWindow() { DataContext = this.DataContext };
+            elementWindow.Show();
         }
 
         //private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

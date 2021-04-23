@@ -6,37 +6,28 @@
         xmlns:local="clr-namespace:s4_oop_6_7_8_9"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="640" MinWidth="1136">
+
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="myConverter"/>
     </Window.Resources>
+    
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Добавить запись" Command="{Binding ToAddModeCommand}" Click="OpenElementWindow"/>
+            <MenuItem Header="Очистить список" Command="{Binding ClearAllCommand}"/>
+        </ContextMenu>
+    </Window.ContextMenu>
 
     <Grid x:Name="gridMain">
-        <!--<Grid.CommandBindings>
-            <CommandBinding Command="New" Executed="NewCommand_Executed"/>
-        </Grid.CommandBindings>-->
-        <Grid.Resources>
-            <ContextMenu  x:Key="DataRowContextMenu">
-                <MenuItem Header="Узнать подробности"/>
-                <MenuItem Header="Изменить"/>
-                <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
-            </ContextMenu>
-        </Grid.Resources>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.15*" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
-        <Grid.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Добавить запись" Command="New"/>
-            </ContextMenu>
-        </Grid.ContextMenu>
 
         <!-- Типа хедер -->
         <Grid x:Name="gridHeader" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
@@ -66,9 +57,9 @@
                 </MenuItem>
                 <MenuItem x:Name="menuSearch" Header="Поиск" Command="Search"/>
             </Menu>
-            
-            <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0"/>
-            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="buttonAdd_Click">
+
+            <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0" FontSize="20"/>
+            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
                 <Image Source="resources/add.png"/>
             </Button>
 
@@ -83,7 +74,7 @@
                 <Button x:Name="buttonItemEdit" Grid.Column="1" Content="Изменить запись"/>
                 <Button x:Name="buttonItemDelete" Grid.Column="2" Content="Удалить запись"/>
             </Grid>-->
-            
+
             <!-- Сортировка датагрида -->
             <!--<GroupBox x:Name="grouBoxSort" Header="Сортировать по: " Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
                 <ListBox x:Name="listBoxSort" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
@@ -105,23 +96,20 @@
         <ScrollViewer x:Name="scrollVieverData" Grid.Row="1" Grid.Column="1">
             <DataGrid x:Name="dataGridMain" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" SelectionMode="Single"
                       ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}">
-                <!--<DataGrid.Resources>
-                    <ContextMenu  x:Key="DataRowContextMenu">
-                        <MenuItem Header="Узнать подробности"/>
-                        <MenuItem Header="Изменить"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
-                    </ContextMenu>
-                </DataGrid.Resources>-->
 
+                <DataGrid.InputBindings>
+                    <KeyBinding Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}" Key="Delete"/>
+                </DataGrid.InputBindings>
+                
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Изменить"/>
+                        <MenuItem Header="Изменить" Click="OpenElementWindow" Command="{Binding ToEditModeCommand}"/>
                         <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.RowStyle >
                     <Style TargetType="{x:Type DataGridRow}">
-                        <Setter Property="Visibility" Value="{Binding Path=ItemVisibility, Converter={StaticResource ResourceKey=myConverter} ,UpdateSourceTrigger=PropertyChanged}" />
+                        <Setter Property="Visibility" Value="{Binding Path=ItemVisibility, Converter={StaticResource ResourceKey=myConverter}, UpdateSourceTrigger=PropertyChanged}" />
                     </Style>
                 </DataGrid.RowStyle>
 
@@ -193,11 +181,8 @@
 
             <Button x:Name="buttonApplyFilters" Content="Применить" Command="{Binding FilterCommand}"/>
             <Button x:Name="buttonClearFilters" Content="Сбросить фильтры" Command="{Binding ClearFilterCommand}"/>
-            <!--<Button.CommandParameter>
-                    <vm:StretchingModel>
-                </Button.CommandParameter>-->
 
         </StackPanel>
-        
+
     </Grid>
 </Window>

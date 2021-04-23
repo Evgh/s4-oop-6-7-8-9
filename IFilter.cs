@@ -202,6 +202,12 @@ namespace s4_oop_6_7_8_9
             }
         }
 
+        public AvailabilityFilter()
+        {
+            available = true;
+            order = true;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

@@ -1,11 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using System.Windows;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Controls;
 
 namespace s4_oop_6_7_8_9
 {
+    // в этом файле вся логика переключения между разными режимами
     partial class ViewModel
     {
 
@@ -65,31 +73,81 @@ namespace s4_oop_6_7_8_9
             }
         }
 
-        public void ToNewMode()
+
+        private RelayCommand toAddModeCommand;
+        public RelayCommand ToAddModeCommand
+        {
+            get
+            {
+                return toAddModeCommand ??
+                    (toAddModeCommand = new RelayCommand(
+                        obj =>
+                        {
+                            ToAddMode();
+                            buffItem = new Plant();
+                            SelectedItem = buffItem;
+                        }
+                        ));
+            }
+        }
+
+        private RelayCommand toEditModeCommand;
+        public RelayCommand ToEditModeCommand
+        {
+            get
+            {
+                return toEditModeCommand ??
+                    (toEditModeCommand = new RelayCommand(
+                        obj =>
+                        {
+                            ToEditMode();
+                            buffItem = SelectedItem.GetCopy();
+                        },
+                        obj =>
+                        {
+                            return !SelectedItem.IsNull() && SelectedItem.ItemVisibility;
+                        }
+                        ));
+            }
+        }
+
+        private void ToAddMode()
         {
             IsAddButtonVisible = true;
             IsResetButtonVisible = true;
-            IsEditButtonVisible = false;
+           
             IsDeleteButtonVisible = false;
-            IsSaveButtonVisible = false;
-        }
-
-        public void ToViewMode()
-        {
-            IsAddButtonVisible = false;
-            IsResetButtonVisible = false;
-            IsEditButtonVisible = true;
-            IsDeleteButtonVisible = true;
-            IsSaveButtonVisible = false;
-        }
-
-        public void ToEditMode()
-        {
-            IsAddButtonVisible = false;
-            IsResetButtonVisible = false;
             IsEditButtonVisible = false;
+            IsSaveButtonVisible = false;
+        }
+
+        private bool InAddMode()
+        {
+            return IsAddButtonVisible && IsResetButtonVisible && !IsDeleteButtonVisible && !IsEditButtonVisible && !IsSaveButtonVisible;
+        }
+
+        //public void ToViewMode()
+        //{
+        //    IsAddButtonVisible = false;
+        //    IsResetButtonVisible = false;
+        //    IsEditButtonVisible = true;
+        //    IsDeleteButtonVisible = true;
+        //    IsSaveButtonVisible = false;
+        //}
+
+        private void ToEditMode()
+        {
+            IsResetButtonVisible = true;
             IsDeleteButtonVisible = true;
-            IsSaveButtonVisible = true;
+
+            IsAddButtonVisible = false;
+            IsEditButtonVisible = false;
+            IsSaveButtonVisible = false;
+        }
+
+        private bool InEditMode()
+        {
+            return IsDeleteButtonVisible && IsResetButtonVisible && !IsAddButtonVisible && !IsEditButtonVisible && !IsSaveButtonVisible;
         }
     }
 }

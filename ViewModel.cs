@@ -26,10 +26,12 @@ namespace s4_oop_6_7_8_9
             }
         }
 
+        private Item buffItem = new Plant(); 
+
         private Item selectedItem;
         public Item SelectedItem
         {
-            get => selectedItem ?? new Plant();
+            get => selectedItem ?? (selectedItem = buffItem);
             set
             {
                 selectedItem = value;
@@ -48,28 +50,6 @@ namespace s4_oop_6_7_8_9
         public IFilter Height { get => filters[2]; }
         public IFilter Diameter { get => filters[3]; }
         public IFilter Availability { get => filters[4]; }
-
-        private RelayCommand deleteCommand;
-        public RelayCommand DeleteCommand
-        {
-            get
-            {
-                return deleteCommand ??
-                    (deleteCommand = new RelayCommand(
-                        obj =>
-                        {
-                            Item item = obj as Item;
-                            if (item != null)
-                            {
-                                Items.Remove(item);
-                            }
-                        },
-                        obj =>
-                        {
-                            return Items.Count > 0;
-                        }));
-            }
-        }
 
         private RelayCommand filterCommand;
         public RelayCommand FilterCommand
@@ -94,7 +74,8 @@ namespace s4_oop_6_7_8_9
 
                                 item.ItemVisibility = isVisible;
                             }
-                        }));
+                        }
+                        ));
             }
         }
 
@@ -111,8 +92,98 @@ namespace s4_oop_6_7_8_9
                             {
                                 item.ItemVisibility = true;
                             }
-                        }));
+                        }
+                        ));
             }
+        }
+
+
+        private RelayCommand deleteCommand;
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return deleteCommand ??
+                    (deleteCommand = new RelayCommand(
+                        obj =>
+                        {
+                            Item item = obj as Item;
+                            if (item != null)
+                            {
+                                Items.Remove(item);
+                            }
+                        },
+                        obj =>
+                        {
+                            return !SelectedItem.IsNull() && SelectedItem.ItemVisibility;
+                        }
+                        ));
+            }
+        }
+
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                    (addCommand = new RelayCommand(
+                        obj =>
+                        {
+                            items.Add(buffItem);
+                            buffItem = new Plant();
+                            SelectedItem = buffItem;
+                        },
+                        obj =>
+                        {
+                            return !buffItem.IsNull();
+                        }
+                        ));
+            }
+        }
+
+        private RelayCommand resetCommand;
+        public RelayCommand ResetCommand
+        {
+            get
+            {
+                return resetCommand ??
+                    (resetCommand = new RelayCommand(
+                        obj =>
+                        {
+                            if (InAddMode())
+                            {
+                                buffItem = new Plant();
+                                SelectedItem = buffItem;
+                            }
+                            else if (InEditMode())
+                            {
+                                SelectedItem.SetCopy(buffItem);
+                            }
+                        }
+                        ));
+            }
+
+        }
+
+        private RelayCommand clearAllCommand;
+        public RelayCommand ClearAllCommand
+        {
+            get
+            {
+                return clearAllCommand ??
+                    (clearAllCommand = new RelayCommand(
+                        obj =>
+                        {
+                            Items.Clear();
+                        },
+                        obj =>
+                        {
+                            return Items.Count > 0;
+                        }
+                        ));
+            }
+
         }
 
         public ViewModel()

@@ -31,13 +31,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Добавить запись" Grid.Column="0" Margin="10" Visibility="{Binding IsAddButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
-            <Button Content="Сбросить" Grid.Column="1" Margin="10" Visibility="{Binding IsResetButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
+            <Button Content="Сбросить изменения" Grid.Column="0" Margin="10" 
+                    Visibility="{Binding IsResetButtonVisible, Converter={StaticResource booleanToVisibility}}"
+                    Command="{Binding ResetCommand}"/>
+            <Button Content="Добавить запись" Grid.Column="1" Margin="10" 
+                    Visibility="{Binding IsAddButtonVisible, Converter={StaticResource booleanToVisibility}}"
+                    Command="{Binding AddCommand}"/>
 
-            <Button Content="Сбросить изменения" Grid.Column="0" Margin="10" Visibility="{Binding IsSaveButtonVisible, Converter={StaticResource booleanToVisibility}}"/>
             <Button Content="Удалить запись" Grid.Column="1" Margin="10" 
                     Visibility="{Binding IsDeleteButtonVisible, Converter={StaticResource booleanToVisibility}}" 
-                    Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
+                    Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}" Click="ButtonDelete_Click"/>
         </Grid>
 
         <!-- Непосредственно забинженные данные -->

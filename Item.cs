@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 namespace s4_oop_6_7_8_9
 {
@@ -20,7 +21,10 @@ namespace s4_oop_6_7_8_9
         int Price { get; set; }
         int Height { get; set; }
         int Diameter { get; set; }
-        
+
+        Item GetCopy();
+        void SetCopy(Item item);
+        bool IsNull();
     }
 
     class Plant : Item
@@ -124,15 +128,40 @@ namespace s4_oop_6_7_8_9
             } 
         }
 
-        
-
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public Item GetCopy()
+        {
+            return (Item)this.MemberwiseClone();
+        }
+
+        public void SetCopy(Item buffItem)
+        {
+            this.ShortName = buffItem.ShortName;
+            this.FullName = buffItem.FullName;
+            this.Description = buffItem.Description;
+            this.Category = buffItem.Category;
+            this.Availability = buffItem.Availability;
+            this.Price = buffItem.Price;
+            this.Height = buffItem.Height;
+            this.Diameter = buffItem.Diameter;
+        }
+
+        public bool IsNull()
+        {
+            return ShortName == null &&
+                   FullName == null &&
+                   Description == null &&
+                   Category == null &&
+                   Availability == 0 &&
+                   Price == 0 &&
+                   Height == 0 &&
+                   Diameter == 0;
         }
     }
 }

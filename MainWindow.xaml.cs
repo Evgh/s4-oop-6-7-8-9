@@ -33,7 +33,7 @@ namespace s4_oop_6_7_8_9
             MessageBox.Show("Команда запущена из " + e.Source.ToString());
         }
 
-        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        private void OpenElementWindow(object sender, RoutedEventArgs e)
         {
             ElementWindow elementWindow = new ElementWindow() { DataContext = this.DataContext };
             elementWindow.Show();

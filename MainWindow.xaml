@@ -10,7 +10,11 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="myConverter"/>
     </Window.Resources>
-    
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenFileCommand}" Key="O" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding SaveFileCommand}" Key="S" Modifiers="Ctrl"/>
+    </Window.InputBindings>
+
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Добавить запись" Command="{Binding ToAddModeCommand}" Click="OpenElementWindow"/>
@@ -47,8 +51,8 @@
 
             <Menu x:Name="menu" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
                 <MenuItem x:Name="menuFile" Header="Файл">
-                    <MenuItem x:Name="menuOpen" Header="Открыть" Command="Open"/>
-                    <MenuItem x:Name="menuSave" Header="Сохранить" Command="Save"/>
+                    <MenuItem x:Name="menuOpen" Header="Открыть" Command="{Binding OpenFileCommand}"/>
+                    <MenuItem x:Name="menuSave" Header="Сохранить" Command="{Binding SaveFileCommand}"/>
                     <MenuItem x:Name="menuClear" Header="Очистить все" Command=""/>
                 </MenuItem>
                 <MenuItem x:Name="menuEdit" Header="Правка">
@@ -107,6 +111,7 @@
                         <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
+                
                 <DataGrid.RowStyle >
                     <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="Visibility" Value="{Binding Path=ItemVisibility, Converter={StaticResource ResourceKey=myConverter}, UpdateSourceTrigger=PropertyChanged}" />
@@ -125,7 +130,7 @@
                     <DataGridTemplateColumn Header="Изображение">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="resources/add.png"/>
+                                <Image Source="{Binding ImagePath}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

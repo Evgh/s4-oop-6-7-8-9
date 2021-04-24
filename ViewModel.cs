@@ -26,7 +26,7 @@ namespace s4_oop_6_7_8_9
             }
         }
 
-        private Item buffItem = new Plant(); 
+        private Item buffItem = ItemFabric.GetEmptyItem(); 
 
         private Item selectedItem;
         public Item SelectedItem
@@ -85,7 +85,7 @@ namespace s4_oop_6_7_8_9
             get
             {
                 return clearFilterCommand ??
-                    (clearFilterCommand = new RelayCommand (
+                    (clearFilterCommand = new RelayCommand(
                         obj =>
                         {
                             foreach (Item item in Items)
@@ -131,7 +131,7 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             items.Add(buffItem);
-                            buffItem = new Plant();
+                            buffItem = ItemFabric.GetEmptyItem();
                             SelectedItem = buffItem;
                         },
                         obj =>
@@ -153,7 +153,7 @@ namespace s4_oop_6_7_8_9
                         {
                             if (InAddMode())
                             {
-                                buffItem = new Plant();
+                                buffItem = ItemFabric.GetEmptyItem();
                                 SelectedItem = buffItem;
                             }
                             else if (InEditMode())
@@ -186,14 +186,38 @@ namespace s4_oop_6_7_8_9
 
         }
 
+        private RelayCommand saveFileCommand;
+        public RelayCommand SaveFileCommand
+        {
+            get
+            {
+                return saveFileCommand ??
+                    (saveFileCommand = new RelayCommand(
+                        obj =>
+                        {
+                            ItemFabric.SaveItemCollection(Items, "serialize.json");
+                        }
+                        ));
+            }
+        }
+
+        private RelayCommand openFileCommand;
+        public RelayCommand OpenFileCommand
+        {
+            get
+            {
+                return openFileCommand ??
+                    (openFileCommand = new RelayCommand(
+                        obj =>
+                        {
+                            Items = ItemFabric.GetItemsCollection("serialize.json");
+                        }
+                        ));
+            }
+        }
+
         public ViewModel()
         {
-            Items = new ObservableCollection<Item>
-            {
-                 new Plant { FullName = "Красивый цветок", ShortName = "Цветок", Category="Цветущие", Height=20, Diameter=15, Price=20, Availability=0, Description="Красивый"},
-                 new Plant { FullName = "Колючий кактус", ShortName = "Кактус", Category="Суккуленты", Height=15, Diameter=7, Price=9, Availability=5, Description="Колючий"}
-            };
-
             ToEditMode();
         }
 

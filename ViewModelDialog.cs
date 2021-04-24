@@ -84,7 +84,7 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             ToAddMode();
-                            buffItem = new Plant();
+                            buffItem = ItemFabric.GetEmptyItem();
                             SelectedItem = buffItem;
                         }
                         ));

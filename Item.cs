@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.IO;
+using Newtonsoft.Json;
 namespace s4_oop_6_7_8_9
 {
     public interface Item : INotifyPropertyChanged
@@ -21,7 +23,9 @@ namespace s4_oop_6_7_8_9
         int Price { get; set; }
         int Height { get; set; }
         int Diameter { get; set; }
+        string ImagePath { get; set; }
 
+        
         Item GetCopy();
         void SetCopy(Item item);
         bool IsNull();
@@ -41,18 +45,18 @@ namespace s4_oop_6_7_8_9
         }
 
         string shortName;
-        public string ShortName 
+        public string ShortName
         {
-            get => shortName; 
+            get => shortName;
             set
             {
                 shortName = value;
                 OnPropertyChanged("ShortName");
-            } 
+            }
         }
 
         string fullName;
-        public string FullName 
+        public string FullName
         {
             get => fullName;
             set
@@ -74,14 +78,14 @@ namespace s4_oop_6_7_8_9
         }
 
         string category;
-        public string Category 
+        public string Category
         {
-            get => category; 
+            get => category;
             set
             {
                 category = value;
                 OnPropertyChanged("Category");
-            } 
+            }
         }
 
         int availability;
@@ -96,9 +100,9 @@ namespace s4_oop_6_7_8_9
         }
 
         int price;
-        public int Price 
+        public int Price
         {
-            get => price; 
+            get => price;
             set
             {
                 price = value;
@@ -107,9 +111,9 @@ namespace s4_oop_6_7_8_9
         }
 
         int height;
-        public int Height 
+        public int Height
         {
-            get => height; 
+            get => height;
             set
             {
                 height = value;
@@ -118,14 +122,25 @@ namespace s4_oop_6_7_8_9
         }
 
         int diameter;
-        public int Diameter 
+        public int Diameter
         {
-            get => diameter; 
+            get => diameter;
             set
             {
                 diameter = value;
                 OnPropertyChanged("Diameter");
-            } 
+            }
+        }
+
+        string imagePath;
+        public string ImagePath
+        {
+            get => imagePath;
+            set
+            {
+                imagePath = value;
+                OnPropertyChanged("ImagePath");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -164,4 +179,65 @@ namespace s4_oop_6_7_8_9
                    Diameter == 0;
         }
     }
+
+    static class ItemFabric
+    {
+        public static Item GetEmptyItem()
+        {
+            return new Plant();
+        }
+
+        public static ObservableCollection<Item> GetItemsCollection(string path)
+        {
+            return PlantSerializer.Deserialize(path);
+        }
+
+        public static void SaveItemCollection(ObservableCollection<Item> items, string path)
+        {
+            PlantSerializer.Serialize(items, path);
+        }
+    }
+
+    static class PlantSerializer 
+    {
+        static JsonSerializerSettings settings;
+        static PlantSerializer()
+        {
+            settings = new JsonSerializerSettings();
+            settings.Converters.Add(new ItemToFlatConverter());
+        }
+
+        public static void Serialize(object source, string path)
+        {
+            using (var sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))
+            {
+                sw.WriteLine(JsonConvert.SerializeObject(source));
+            }
+        }
+
+        public static ObservableCollection<Item> Deserialize(string path)
+        {
+            using (var sr = new StreamReader(path))
+            {
+                return JsonConvert.DeserializeObject<ObservableCollection<Item>>(sr.ReadToEnd(), settings);
+            }
+        }
+
+        private class ItemToFlatConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return (objectType == typeof(Item));
+            }
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                serializer.Serialize(writer, value, typeof(Plant));
+            }
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                return serializer.Deserialize(reader, typeof(Plant)); ;
+            }
+        }
+    }
+
 }

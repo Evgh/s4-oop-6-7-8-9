@@ -66,7 +66,7 @@
             <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
                 <Image Source="resources/add.png"/>
             </Button>
-
+         
             <!-- Кнопки, отображаемые для редактирования конкретного эл-та -->
             <!--<Grid x:Name="gridItemButtons" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
@@ -104,14 +104,14 @@
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}" Key="Delete"/>
                 </DataGrid.InputBindings>
-                
+
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Изменить" Click="OpenElementWindow" Command="{Binding ToEditModeCommand}"/>
                         <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
-                
+
                 <DataGrid.RowStyle >
                     <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="Visibility" Value="{Binding Path=ItemVisibility, Converter={StaticResource ResourceKey=myConverter}, UpdateSourceTrigger=PropertyChanged}" />

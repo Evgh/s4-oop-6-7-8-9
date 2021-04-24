@@ -24,7 +24,7 @@ namespace s4_oop_6_7_8_9
             InitializeComponent();
         }
 
-        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

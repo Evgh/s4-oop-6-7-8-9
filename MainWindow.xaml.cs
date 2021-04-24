@@ -38,5 +38,10 @@ namespace s4_oop_6_7_8_9
             ElementWindow elementWindow = new ElementWindow() { DataContext = this.DataContext };
             elementWindow.Show();
         }
+
+        private void buttonAdd_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show($"{!((ViewModel)DataContext).SelectedItem.IsNull()} \n { ((ViewModel)DataContext).SelectedItem.ItemVisibility} \n { ((ViewModel)DataContext).SelectedItem.FullName}");
+        }
     }
 }

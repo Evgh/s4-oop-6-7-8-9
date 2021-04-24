@@ -184,7 +184,7 @@ namespace s4_oop_6_7_8_9
     {
         public static Item GetEmptyItem()
         {
-            return new Plant();
+            return new Plant() { ImagePath = "resources\\add.png" };
         }
 
         public static ObservableCollection<Item> GetItemsCollection(string path)

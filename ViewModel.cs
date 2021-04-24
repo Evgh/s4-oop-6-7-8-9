@@ -131,8 +131,6 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             items.Add(buffItem);
-                            buffItem = ItemFabric.GetEmptyItem();
-                            SelectedItem = buffItem;
                         },
                         obj =>
                         {
@@ -218,6 +216,7 @@ namespace s4_oop_6_7_8_9
 
         public ViewModel()
         {
+            Items = new ObservableCollection<Item> { };
             ToEditMode();
         }
 

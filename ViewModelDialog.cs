@@ -139,15 +139,15 @@ namespace s4_oop_6_7_8_9
         {
             IsResetButtonVisible = true;
             IsDeleteButtonVisible = true;
+            IsSaveButtonVisible = true;
 
             IsAddButtonVisible = false;
-            IsEditButtonVisible = false;
-            IsSaveButtonVisible = false;
+            IsEditButtonVisible = false;            
         }
 
         private bool InEditMode()
         {
-            return IsDeleteButtonVisible && IsResetButtonVisible && !IsAddButtonVisible && !IsEditButtonVisible && !IsSaveButtonVisible;
+            return IsDeleteButtonVisible && IsResetButtonVisible && IsSaveButtonVisible && !IsAddButtonVisible && !IsEditButtonVisible;
         }
     }
 }

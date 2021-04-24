@@ -13,6 +13,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}" Key="O" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding SaveFileCommand}" Key="S" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding ClearAllCommand}" Key="Delete" Modifiers="Ctrl"/>
     </Window.InputBindings>
 
     <Window.ContextMenu>
@@ -64,12 +65,9 @@
 
             <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0" FontSize="20"/>
             <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
-                <Image Source="resources/add.png"/>
+                <Image Source="resources/icons/add.png"/>
             </Button>
-            <Button x:Name="buttonAdd_Copy" Grid.Row="1" Grid.Column="2" Margin="0.4,0.2,0.8,-0.4" Click="buttonAdd_Copy_Click">
-                <Image Source="resources/add.png"/>
-            </Button>
-
+            
             <!-- Кнопки, отображаемые для редактирования конкретного эл-та -->
             <!--<Grid x:Name="gridItemButtons" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Visibility="Hidden">
                 <Grid.ColumnDefinitions>

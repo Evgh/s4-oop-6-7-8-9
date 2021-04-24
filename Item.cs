@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.IO;
 using Newtonsoft.Json;
+using System.Windows.Media.Imaging;
+
 namespace s4_oop_6_7_8_9
 {
     public interface Item : INotifyPropertyChanged
@@ -24,7 +26,7 @@ namespace s4_oop_6_7_8_9
         int Height { get; set; }
         int Diameter { get; set; }
         string ImagePath { get; set; }
-
+        BitmapImage Image {get;}
         
         Item GetCopy();
         void SetCopy(Item item);
@@ -140,7 +142,14 @@ namespace s4_oop_6_7_8_9
             {
                 imagePath = value;
                 OnPropertyChanged("ImagePath");
+                OnPropertyChanged("Image");
             }
+        }
+
+        //BitmapImage image;
+        public BitmapImage Image
+        {
+            get => new BitmapImage(new Uri(ImagePath));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -168,15 +177,30 @@ namespace s4_oop_6_7_8_9
         }
 
         public bool IsNull()
-        {
-            return ShortName == null &&
-                   FullName == null &&
-                   Description == null &&
-                   Category == null &&
-                   Availability == 0 &&
-                   Price == 0 &&
-                   Height == 0 &&
-                   Diameter == 0;
+        {    
+            if (ShortName == null &&
+                FullName == null &&
+                Description == null &&
+                Category == null &&
+                Availability == 0 &&
+                Price == 0 &&
+                Height == 0 &&
+                Diameter == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return ShortName == "" &&
+                       FullName == "" &&
+                       Description == "" &&
+                       Category == "" &&
+                       Availability == 0 &&
+                       Price == 0 &&
+                       Height == 0 &&
+                       Diameter == 0;
+            }
+
         }
     }
 

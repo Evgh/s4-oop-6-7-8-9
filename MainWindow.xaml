@@ -131,7 +131,7 @@
                     <DataGridTemplateColumn Header="Изображение">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding ImagePath}"/>
+                                <Image Source="{Binding Image}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

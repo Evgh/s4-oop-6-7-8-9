@@ -48,7 +48,9 @@
                     Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}" Click="CloseWindow"/>
 
         <!-- Непосредственно забинженные данные -->
-        <Image Grid.Row="1" Grid.Column="0" Margin="10" Source="resources/add.png" Stretch="UniformToFill"/>
+        <Button Grid.Row="1" Grid.Column="0" Margin="10" Command="{Binding OpenImageCommand}">
+            <Image DataContext="{Binding SelectedItem}" Source="{Binding Image}" Stretch="UniformToFill"/>
+        </Button>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <TextBox x:Name="textBoxName" FontSize="30" Text="{Binding ShortName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBox x:Name="textBoxFullName" Margin="0 0 0 10" Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

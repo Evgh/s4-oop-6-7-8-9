@@ -152,7 +152,17 @@ namespace s4_oop_6_7_8_9
         [JsonIgnore]
         public BitmapImage Image
         {
-            get => new BitmapImage(new Uri(ImagePath));
+            get
+            {
+                if (ImagePath != null)
+                {
+                    return new BitmapImage(new Uri(ImagePath));
+                }
+                else
+                {
+                    return new BitmapImage(new Uri("D:\\OOP\\s4-oop-6-7-8-9\\resources\\add.png"));
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -185,6 +195,7 @@ namespace s4_oop_6_7_8_9
                 FullName == null &&
                 Description == null &&
                 Category == null &&
+                ImagePath == null &&
                 Availability == 0 &&
                 Price == 0 &&
                 Height == 0 &&
@@ -198,6 +209,7 @@ namespace s4_oop_6_7_8_9
                        FullName == "" &&
                        Description == "" &&
                        Category == "" &&
+                       ImagePath == "" &&
                        Availability == 0 &&
                        Price == 0 &&
                        Height == 0 &&
@@ -211,7 +223,7 @@ namespace s4_oop_6_7_8_9
     {
         public static Item GetEmptyItem()
         {
-            return new Plant() { ImagePath = "resources\\add.png" };
+            return new Plant();
         }
 
         public static ObservableCollection<Item> GetItemsCollection(string path)

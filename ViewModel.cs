@@ -237,7 +237,7 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             OpenFileDialog openFileDialog = new OpenFileDialog();
-                            openFileDialog.Filter = "PNG image (*.png)|*.png";
+                            openFileDialog.Filter = "PNG image (*.png)|*.png|Jpeg image(*.jpg)|*.jpg";
                             if (openFileDialog.ShowDialog() == true)
                             {
                                 SelectedItem.ImagePath = openFileDialog.FileName;

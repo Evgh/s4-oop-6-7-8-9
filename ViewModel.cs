@@ -10,6 +10,7 @@ using System.Windows;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Controls;
+using Microsoft.Win32;
 
 namespace s4_oop_6_7_8_9
 {
@@ -193,7 +194,12 @@ namespace s4_oop_6_7_8_9
                     (saveFileCommand = new RelayCommand(
                         obj =>
                         {
-                            ItemFabric.SaveItemCollection(Items, "serialize.json");
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+                            if (saveFileDialog.ShowDialog() == true)
+                            {
+                                ItemFabric.SaveItemCollection(Items, saveFileDialog.FileName);
+                            }
                         }
                         ));
             }
@@ -208,7 +214,14 @@ namespace s4_oop_6_7_8_9
                     (openFileCommand = new RelayCommand(
                         obj =>
                         {
-                            Items = ItemFabric.GetItemsCollection("serialize.json");
+                            // по-хорошему для грамотного mvvm стоит переделать это и saveFileDialog, но пока на это нет времени
+                            // также можно добавить обработку исключений
+                            OpenFileDialog openFileDialog = new OpenFileDialog();
+                            openFileDialog.Filter = "JSON files (*.json)|*.json";
+                            if (openFileDialog.ShowDialog() == true)
+                            {
+                                Items = ItemFabric.GetItemsCollection(openFileDialog.FileName);
+                            }
                         }
                         ));
             }

@@ -26,6 +26,8 @@ namespace s4_oop_6_7_8_9
         int Height { get; set; }
         int Diameter { get; set; }
         string ImagePath { get; set; }
+
+        [JsonIgnore]
         BitmapImage Image {get;}
         
         Item GetCopy();
@@ -147,6 +149,7 @@ namespace s4_oop_6_7_8_9
         }
 
         //BitmapImage image;
+        [JsonIgnore]
         public BitmapImage Image
         {
             get => new BitmapImage(new Uri(ImagePath));

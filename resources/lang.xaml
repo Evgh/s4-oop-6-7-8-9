@@ -59,5 +59,20 @@
     <!-- Фильтры.Кнопки -->
     <v:String x:Key="buttonApplyFilters">Применить</v:String>
     <v:String x:Key="buttonClearFilters">Сбросить фильтры</v:String>
-  
+
+    <!-- ___________________________________________________________________ Окно изменения итема -->
+    <v:String x:Key="buttonAddNew">Добавить запись</v:String>
+    <v:String x:Key="buttonReset">Сбросить правки</v:String>
+    <v:String x:Key="buttonDelete">Удалить запись</v:String>
+    <v:String x:Key="buttonSave">Сохранить</v:String>
+
+    <v:String x:Key="textBlockCurrency"> руб</v:String>
+    <v:String x:Key="textBlockCategory">Категория: </v:String>
+    <v:String x:Key="textBlockDescription">Описание: </v:String>
+    <v:String x:Key="textBlockHeight">Высота растения, см</v:String>
+    <v:String x:Key="textBlockDiameter">Диаметр горшка, см</v:String>
+    <v:String x:Key="textBlockAvailability">Наличие</v:String>
+    <v:String x:Key="textBlockAmount">Количество</v:String>
+    
+
 </ResourceDictionary>

@@ -59,5 +59,19 @@
     <!-- Фильтры.Кнопки -->
     <v:String x:Key="buttonApplyFilters">Apply</v:String>
     <v:String x:Key="buttonClearFilters">Reset</v:String>
-  
+
+    <!-- ___________________________________________________________________ Окно изменения итема -->
+    <v:String x:Key="buttonAddNew">Add</v:String>
+    <v:String x:Key="buttonReset">Reset</v:String>
+    <v:String x:Key="buttonDelete">Delete</v:String>
+    <v:String x:Key="buttonSave">Save</v:String>
+
+    <v:String x:Key="textBlockCurrency"> BYN</v:String>
+    <v:String x:Key="textBlockCategory">Category:</v:String>
+    <v:String x:Key="textBlockDescription">Description:</v:String>
+    <v:String x:Key="textBlockHeight">Height, sm</v:String>
+    <v:String x:Key="textBlockDiameter">Diameter, sm</v:String>
+    <v:String x:Key="textBlockAvailability">Availability</v:String>
+    <v:String x:Key="textBlockAmount">Amount</v:String>
+
 </ResourceDictionary>

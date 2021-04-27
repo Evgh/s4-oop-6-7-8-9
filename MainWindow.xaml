@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:s4_oop_6_7_8_9"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="640" MinWidth="1136">
+        Title="{DynamicResource h1}" MinHeight="640" MinWidth="1136">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="myConverter"/>
@@ -49,22 +49,10 @@
             <MenuItem Header="{DynamicResource menuSearch}" Command="Search"/>
         </Menu>
 
-        <!-- Типа хедер -->
-        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock Text="{DynamicResource h1}" Grid.Column="0" FontSize="20"/>
-            <Button Grid.Row="1" Grid.Column="6"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
-                <Image Source="resources/icons/add.png"/>
-            </Button>
-        </Grid>
+        <TextBlock Text="{DynamicResource h1}" Grid.Row="1" Grid.Column="0" FontSize="20" Margin="10"/>
+        <Button Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
+            <Image Source="resources/icons/add.png"/>
+        </Button>
 
         <!-- Непосредственно контейнер для данных -->
         <ScrollViewer Grid.Row="2" Grid.Column="1">
@@ -144,9 +132,9 @@
         </ScrollViewer>
 
         <!-- Фильтры -->
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" >
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Margin="5">
             <Expander Header="{DynamicResource filterCategory}" IsExpanded="True">
-                <StackPanel>
+                <StackPanel Margin="5">
                     <CheckBox Content="{DynamicResource categoryBlooming}" DataContext="{Binding Category}" IsChecked="{Binding Path=Blooming, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <CheckBox Content="{DynamicResource categoryDeciduous}" DataContext="{Binding Category}" IsChecked="{Binding Path=Decidious, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <CheckBox Content="{DynamicResource categoryFruit}" DataContext="{Binding Category}" IsChecked="{Binding Path=Fruit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -159,7 +147,7 @@
             </Expander>
 
             <Expander Header="{DynamicResource filterPrice}" IsExpanded="True">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBox MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MinPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
                     <TextBox MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MaxPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -167,7 +155,7 @@
             </Expander>
 
             <Expander Header="{DynamicResource filterHeight}" IsExpanded="True">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBox MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MinHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
                     <TextBox MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MaxHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -175,7 +163,7 @@
             </Expander>
 
             <Expander Header="{DynamicResource filterDiameter}" IsExpanded="True">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MinDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
                     <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -183,14 +171,14 @@
             </Expander>
 
             <Expander Header="{DynamicResource filterAvailability}" IsExpanded="True">
-                <StackPanel>
+                <StackPanel Margin="5">
                     <CheckBox Content="{DynamicResource AvailabilityYes}" DataContext="{Binding Availability}" IsChecked="{Binding Path=Available, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <CheckBox Content="{DynamicResource AvailabilityNo}" DataContext="{Binding Availability}" IsChecked="{Binding Path=Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
-            <Button Content="{DynamicResource buttonApplyFilters}" Command="{Binding FilterCommand}"/>
-            <Button Content="{DynamicResource buttonClearFilters}" Command="{Binding ClearFilterCommand}"/>
+            <Button Content="{DynamicResource buttonApplyFilters}" Command="{Binding FilterCommand}" Margin="5 5 5 1"/>
+            <Button Content="{DynamicResource buttonClearFilters}" Command="{Binding ClearFilterCommand}" Margin="5 1 5 5"/>
 
         </StackPanel>
 

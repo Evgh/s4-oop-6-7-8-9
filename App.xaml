@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:s4_oop_6_7_8_9"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Image x:Key="addIcon" Source="icons/add.png"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="resources\lang.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

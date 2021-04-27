@@ -1,0 +1,63 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!-- ___________________________________________________________________ Основное окно -->
+    <!-- Заголовок приложения -->
+    <v:String x:Key="h1">Каталог</v:String>
+
+    <!-- Основное меню приложения -->
+    <v:String x:Key="menuFile">Файл</v:String>
+    <v:String x:Key="menuOpen">Открыть</v:String>
+    <v:String x:Key="menuSave">Сохранить</v:String>
+    <v:String x:Key="menuClear">Очистить список</v:String>
+    <v:String x:Key="menuEdit">Правка</v:String>
+    <v:String x:Key="menuUndo">Отменить</v:String>
+    <v:String x:Key="menuRedo">Повторить</v:String>
+    <v:String x:Key="menuLanguage">Язык</v:String>
+    <v:String x:Key="menuSearch">Поиск</v:String>
+
+    <!-- Контекстное меню по нажатию правой клавиши -->
+    <v:String x:Key="winContextMenuAdd">Добавить запись</v:String>
+    <v:String x:Key="winContextMenuClearAll">Очистить список</v:String>
+
+    <!-- Контекстное меню по нажатию правой клавиши внутри датагрида -->
+    <v:String x:Key="datagridContextMenuEdit">Изменить</v:String>
+    <v:String x:Key="datagridContextMenuDelete">Удалить</v:String>
+
+    <!-- Колонки датагрида -->
+    <v:String x:Key="datagridColumnName">Название</v:String>
+    <v:String x:Key="datagridColumnFullName">Полное </v:String>
+    <v:String x:Key="datagridColumnCategory">Категория</v:String>
+    <v:String x:Key="datagridColumnPrice">Цена, руб</v:String>
+    <v:String x:Key="datagridColumnHeight">Высота, см</v:String>
+    <v:String x:Key="datagridColumnDiameter">Диаметр, см</v:String>
+    <v:String x:Key="datagridColumnAvailability">Наличие</v:String>
+    <v:String x:Key="datagridColumnDescription">Описание</v:String>
+    <v:String x:Key="datagridColumnImage">Изображение</v:String>
+
+    <!-- Фильтры -->
+    <v:String x:Key="filterCategory">Категория</v:String>
+    <v:String x:Key="filterPrice">Цена, руб</v:String>
+    <v:String x:Key="filterHeight">Высота, см</v:String>
+    <v:String x:Key="filterDiameter">Диаметр, см</v:String>
+    <v:String x:Key="filterAvailability">Наличие</v:String>
+  
+    <!-- Фильтры.Категория -->
+    <v:String x:Key="categoryBlooming">Цветущие</v:String>
+    <v:String x:Key="categoryDeciduous">Лиственные</v:String>
+    <v:String x:Key="categoryFruit">Плодовые</v:String>
+    <v:String x:Key="categoryPredator">Насекомоядные</v:String>
+    <v:String x:Key="categoryBonsai">Бонсай</v:String>
+    <v:String x:Key="categorySucculent">Суккуленты</v:String>
+    <v:String x:Key="categoryPrimiting">Грунт</v:String>
+    <v:String x:Key="categoryAccessories">Аксессуары</v:String>
+  
+    <!-- Фильтры.Наличие -->
+    <v:String x:Key="AvailabilityYes">В наличии</v:String>
+    <v:String x:Key="AvailabilityNo">Под заказ</v:String>
+ 
+    <!-- Фильтры.Кнопки -->
+    <v:String x:Key="buttonApplyFilters">Применить</v:String>
+    <v:String x:Key="buttonClearFilters">Сбросить фильтры</v:String>
+  
+</ResourceDictionary>

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace s4_oop_6_7_8_9
 {
@@ -21,12 +22,25 @@ namespace s4_oop_6_7_8_9
     /// </summary>
     public partial class MainWindow : Window
     {
-        //ObservableCollection<Item> itemsSource;
-
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new ViewModel();
+
+            App.LanguageChanged += LanguageChanged;
+            CultureInfo currLang = App.Language;
+           
+            //Заполняем меню смены языка:
+            menuLanguage.Items.Clear();
+            foreach (var lang in App.Languages)
+            {
+                MenuItem menuLang = new MenuItem();
+                menuLang.Header = lang.DisplayName;
+                menuLang.Tag = lang;
+                menuLang.IsChecked = lang.Equals(currLang);
+                menuLang.Click += ChangeLanguageClick;
+                menuLanguage.Items.Add(menuLang);
+            }
         }
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -42,6 +56,32 @@ namespace s4_oop_6_7_8_9
         private void buttonAdd_Copy_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show($"{!((ViewModel)DataContext).SelectedItem.IsNull()} \n { ((ViewModel)DataContext).SelectedItem.ItemVisibility} \n { ((ViewModel)DataContext).SelectedItem.FullName}");
+        }
+
+        private void LanguageChanged(Object sender, EventArgs e)
+        {
+            CultureInfo currLang = App.Language;
+
+            //Отмечаем нужный пункт смены языка как выбранный язык
+            foreach (MenuItem i in menuLanguage.Items)
+            {
+                CultureInfo ci = i.Tag as CultureInfo;
+                i.IsChecked = ci != null && ci.Equals(currLang);
+            }
+        }
+
+        private void ChangeLanguageClick(Object sender, EventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+            if (mi != null)
+            {
+                CultureInfo lang = mi.Tag as CultureInfo;
+                if (lang != null)
+                {
+                    App.Language = lang;
+                }
+            }
+
         }
     }
 }

@@ -23,10 +23,11 @@
         </ContextMenu>
     </Window.ContextMenu>
 
-    <Grid x:Name="gridMain">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.15*" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -34,13 +35,22 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <!-- Типа хедер -->
-        <Grid x:Name="gridHeader" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="{DynamicResource menuFile}">
+                <MenuItem Header="{DynamicResource menuOpen}" Command="{Binding OpenFileCommand}"/>
+                <MenuItem Header="{DynamicResource menuSave}" Command="{Binding SaveFileCommand}"/>
+                <MenuItem Header="{DynamicResource menuClear}" Command=""/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource menuEdit}">
+                <MenuItem Header="{DynamicResource menuUndo}" Command="Undo"/>
+                <MenuItem Header="{DynamicResource menuRedo}" Command="Redo"/>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource menuLanguage}" x:Name="menuLanguage"/>
+            <MenuItem Header="{DynamicResource menuSearch}" Command="Search"/>
+        </Menu>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <!-- Типа хедер -->
+        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -49,57 +59,16 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
-            <Menu x:Name="menu" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
-                <MenuItem x:Name="menuFile" Header="Файл">
-                    <MenuItem x:Name="menuOpen" Header="Открыть" Command="{Binding OpenFileCommand}"/>
-                    <MenuItem x:Name="menuSave" Header="Сохранить" Command="{Binding SaveFileCommand}"/>
-                    <MenuItem x:Name="menuClear" Header="Очистить все" Command=""/>
-                </MenuItem>
-                <MenuItem x:Name="menuEdit" Header="Правка">
-                    <MenuItem x:Name="menuUndo" Header="Отменить" Command="Undo"/>
-                    <MenuItem x:Name="menuRedo" Header="Повторить" Command="Redo"/>
-                </MenuItem>
-                <MenuItem x:Name="menuSearch" Header="Поиск" Command="Search"/>
-            </Menu>
-
-            <TextBlock x:Name="textBlockH1" Text="Каталог товаров" Grid.Row="1" Grid.Column="0" FontSize="20"/>
-            <Button x:Name="buttonAdd" Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
+            
+            <TextBlock Text="{DynamicResource h1}" Grid.Column="0" FontSize="20"/>
+            <Button Grid.Row="1" Grid.Column="6"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
                 <Image Source="resources/icons/add.png"/>
             </Button>
-            
-            <!-- Кнопки, отображаемые для редактирования конкретного эл-та -->
-            <!--<Grid x:Name="gridItemButtons" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Visibility="Hidden">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="buttonItemInfo" Grid.Column="0" Content="Подробная информация" />
-                <Button x:Name="buttonItemEdit" Grid.Column="1" Content="Изменить запись"/>
-                <Button x:Name="buttonItemDelete" Grid.Column="2" Content="Удалить запись"/>
-            </Grid>-->
-
-            <!-- Сортировка датагрида -->
-            <!--<GroupBox x:Name="grouBoxSort" Header="Сортировать по: " Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
-                <ListBox x:Name="listBoxSort" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBoxItem x:Name="listBoxSortName" Content="Названию" IsSelected="True"/>
-                    <ListBoxItem x:Name="listBoxSortPrice" Content="Цене"/>
-                    <ListBoxItem x:Name="listBoxSortAmount" Content="Количеству"/>
-                    <ListBoxItem x:Name="listBoxSortHeight" Content="Высоте растения"/>
-                    <ListBoxItem x:Name="listBoxSortDiameter" Content="Диаметру горшка"/>
-                </ListBox>
-            </GroupBox>-->
         </Grid>
 
         <!-- Непосредственно контейнер для данных -->
-        <ScrollViewer x:Name="scrollVieverData" Grid.Row="1" Grid.Column="1">
-            <DataGrid x:Name="dataGridMain" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" SelectionMode="Single"
+        <ScrollViewer Grid.Row="2" Grid.Column="1">
+            <DataGrid AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True" SelectionMode="Single"
                       ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}">
 
                 <DataGrid.InputBindings>
@@ -108,8 +77,8 @@
 
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Изменить" Click="OpenElementWindow" Command="{Binding ToEditModeCommand}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
+                        <MenuItem Header="{DynamicResource datagridContextMenuEdit}" Click="OpenElementWindow" Command="{Binding ToEditModeCommand}"/>
+                        <MenuItem Header="{DynamicResource datagridContextMenuDelete}" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
@@ -120,15 +89,50 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Path=ShortName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Полное название" Binding="{Binding Path=FullName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Категория" Binding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Цена, руб" Binding="{Binding Path=Price, UpdateSourceTrigger=PropertyChanged}" Width="0.7*"/>
-                    <DataGridTextColumn Header="Высота, см" Binding="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged}" Width="0.7*"/>
-                    <DataGridTextColumn Header="Диаметр, см" Binding="{Binding Path=Diameter, UpdateSourceTrigger=PropertyChanged}" Width="0.7*"/>
-                    <DataGridTextColumn Header="Наличие" Binding="{Binding Path=Availability, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTemplateColumn Header="Изображение">
+                    <DataGridTextColumn Binding="{Binding Path=ShortName, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnName}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=FullName, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnFullName}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnCategory}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Price, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnPrice}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnHeight}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Diameter, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnDiameter}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Availability, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnAvailability}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnDescription}" ></TextBlock>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="{DynamicResource datagridColumnImage}" ></TextBlock>
+                        </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}"/>
@@ -140,53 +144,53 @@
         </ScrollViewer>
 
         <!-- Фильтры -->
-        <StackPanel x:Name="stackPanelFilters" Orientation="Vertical" Grid.Column="0" Grid.Row="1" >
-            <Expander x:Name="expanderCategory" Header="Категория" IsExpanded="True">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" >
+            <Expander Header="{DynamicResource filterCategory}" IsExpanded="True">
                 <StackPanel>
-                    <CheckBox x:Name="categoryBlooming" Content="Цветущие" DataContext="{Binding Category}" IsChecked="{Binding Path=Blooming, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryDeciduous" Content="Лиственные" DataContext="{Binding Category}" IsChecked="{Binding Path=Decidious, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryFruit" Content="Плодовые" DataContext="{Binding Category}" IsChecked="{Binding Path=Fruit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryPredator" Content="Насекомоядные" DataContext="{Binding Category}" IsChecked="{Binding Path=Predator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryBonsai" Content="Бонсай" DataContext="{Binding Category}" IsChecked="{Binding Path=Bonsai, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categorySucculent" Content="Суккуленты" DataContext="{Binding Category}" IsChecked="{Binding Path=Succulent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryPrimiting" Content="Грунт" DataContext="{Binding Category}" IsChecked="{Binding Path=Primiting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="categoryAccessories" Content="Аксессуары" DataContext="{Binding Category}" IsChecked="{Binding Path=Accessories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryBlooming}" DataContext="{Binding Category}" IsChecked="{Binding Path=Blooming, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryDeciduous}" DataContext="{Binding Category}" IsChecked="{Binding Path=Decidious, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryFruit}" DataContext="{Binding Category}" IsChecked="{Binding Path=Fruit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryPredator}" DataContext="{Binding Category}" IsChecked="{Binding Path=Predator, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryBonsai}" DataContext="{Binding Category}" IsChecked="{Binding Path=Bonsai, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categorySucculent}" DataContext="{Binding Category}" IsChecked="{Binding Path=Succulent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryPrimiting}" DataContext="{Binding Category}" IsChecked="{Binding Path=Primiting, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource categoryAccessories}" DataContext="{Binding Category}" IsChecked="{Binding Path=Accessories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
-            <Expander x:Name="expanderPrice" Header="Цена, руб" IsExpanded="True">
-                <StackPanel x:Name="stackPanelPrice" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinPrice" MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MinPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Expander Header="{DynamicResource filterPrice}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MinPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxPrice" MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MaxPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBox MinWidth="70" DataContext="{Binding Price}" Text="{Binding Path=MaxPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </StackPanel>
             </Expander>
 
-            <Expander x:Name="expanderHeight" Header="Высота растения, см" IsExpanded="True">
-                <StackPanel x:Name="stackPanelHeight" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinHeight" MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MinHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Expander Header="{DynamicResource filterHeight}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MinHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxHeight" MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MaxHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox MinWidth="70" DataContext="{Binding Height}" Text="{Binding Path=MaxHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
-            <Expander x:Name="expanderDiameter" Header="Диаметр горшка, см" IsExpanded="True">
-                <StackPanel x:Name="stackPanelDiameter" Orientation="Horizontal">
-                    <TextBox x:Name="textBoxMinDiameter" MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MinDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Expander Header="{DynamicResource filterDiameter}" IsExpanded="True">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MinDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox x:Name="textBoxMaxDiameter" MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
-            <Expander x:Name="expanderAvailability" Header="Наличие" IsExpanded="True">
-                <StackPanel x:Name="stackPanelAvailability">
-                    <CheckBox x:Name="checkBoxAvailabilityShop" Content="В наличии" DataContext="{Binding Availability}" IsChecked="{Binding Path=Available, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <CheckBox x:Name="checkBoxAvailabilityOrder" Content="Под заказ" DataContext="{Binding Availability}" IsChecked="{Binding Path=Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Expander Header="{DynamicResource filterAvailability}" IsExpanded="True">
+                <StackPanel>
+                    <CheckBox Content="{DynamicResource AvailabilityYes}" DataContext="{Binding Availability}" IsChecked="{Binding Path=Available, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <CheckBox Content="{DynamicResource AvailabilityNo}" DataContext="{Binding Availability}" IsChecked="{Binding Path=Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
-            <Button x:Name="buttonApplyFilters" Content="Применить" Command="{Binding FilterCommand}"/>
-            <Button x:Name="buttonClearFilters" Content="Сбросить фильтры" Command="{Binding ClearFilterCommand}"/>
+            <Button Content="{DynamicResource buttonApplyFilters}" Command="{Binding FilterCommand}"/>
+            <Button Content="{DynamicResource buttonClearFilters}" Command="{Binding ClearFilterCommand}"/>
 
         </StackPanel>
 

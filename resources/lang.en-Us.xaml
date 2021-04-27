@@ -1,0 +1,63 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!-- ___________________________________________________________________ Основное окно -->
+    <!-- Заголовок приложения -->
+    <v:String x:Key="h1">US</v:String>
+
+    <!-- Основное меню приложения -->
+    <v:String x:Key="menuFile">File</v:String>
+    <v:String x:Key="menuOpen">Open</v:String>
+    <v:String x:Key="menuSave">Save</v:String>
+    <v:String x:Key="menuClear">Clear all</v:String>
+    <v:String x:Key="menuEdit">Edit</v:String>
+    <v:String x:Key="menuUndo">Undo</v:String>
+    <v:String x:Key="menuRedo">Redo</v:String>
+    <v:String x:Key="menuLanguage">Language</v:String>
+    <v:String x:Key="menuSearch">Search</v:String>
+
+    <!-- Контекстное меню по нажатию правой клавиши -->
+    <v:String x:Key="winContextMenuAdd">Add item</v:String>
+    <v:String x:Key="winContextMenuClearAll">Clear all</v:String>
+
+    <!-- Контекстное меню по нажатию правой клавиши внутри датагрида -->
+    <v:String x:Key="datagridContextMenuEdit">Edit</v:String>
+    <v:String x:Key="datagridContextMenuDelete">Delete</v:String>
+
+    <!-- Колонки датагрида -->
+    <v:String x:Key="datagridColumnName">Name</v:String>
+    <v:String x:Key="datagridColumnFullName">Full Name</v:String>
+    <v:String x:Key="datagridColumnCategory">Category</v:String>
+    <v:String x:Key="datagridColumnPrice">Price, BYN</v:String>
+    <v:String x:Key="datagridColumnHeight">Height, sm</v:String>
+    <v:String x:Key="datagridColumnDiameter">Diameter, sm</v:String>
+    <v:String x:Key="datagridColumnAvailability">Availability</v:String>
+    <v:String x:Key="datagridColumnDescription">Description</v:String>
+    <v:String x:Key="datagridColumnImage">Image</v:String>
+
+    <!-- Фильтры -->
+    <v:String x:Key="filterCategory">Category</v:String>
+    <v:String x:Key="filterPrice">Price, BYN</v:String>
+    <v:String x:Key="filterHeight">Height, sm</v:String>
+    <v:String x:Key="filterDiameter">Diameter, sm</v:String>
+    <v:String x:Key="filterAvailability">Availability</v:String>
+  
+    <!-- Фильтры.Категория -->
+    <v:String x:Key="categoryBlooming">Bloomin</v:String>
+    <v:String x:Key="categoryDeciduous">Deciduous</v:String>
+    <v:String x:Key="categoryFruit">Fruit</v:String>
+    <v:String x:Key="categoryPredator">Predator</v:String>
+    <v:String x:Key="categoryBonsai">Bonsai</v:String>
+    <v:String x:Key="categorySucculent">Succulent</v:String>
+    <v:String x:Key="categoryPrimiting">Primiting</v:String>
+    <v:String x:Key="categoryAccessories">Accessories</v:String>
+  
+    <!-- Фильтры.Наличие -->
+    <v:String x:Key="AvailabilityYes">Available</v:String>
+    <v:String x:Key="AvailabilityNo">Not available</v:String>
+ 
+    <!-- Фильтры.Кнопки -->
+    <v:String x:Key="buttonApplyFilters">Apply</v:String>
+    <v:String x:Key="buttonClearFilters">Reset</v:String>
+  
+</ResourceDictionary>

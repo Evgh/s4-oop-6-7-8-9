@@ -11,9 +11,17 @@
     <Window.Resources>
         <local:CategoryToIntConverter x:Key="categoryConverter"/>
         <BooleanToVisibilityConverter x:Key="booleanToVisibility"/>
+        <Style x:Key="WinStyle">
+            <Setter Property="Control.FontFamily" Value="Lato"/>
+            <Setter Property="Control.FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF8ABA8A"/>
+            <Setter Property="Control.FontFamily" Value="Lato"/>
+        </Style>
     </Window.Resources>
     
-    <Grid Margin="10">
+    <Grid Margin="10" Style="{StaticResource WinStyle}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -31,19 +39,19 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="{DynamicResource buttonAddNew}" Grid.Column="0" Margin="10" 
+            <Button Content="{DynamicResource buttonAddNew}" Grid.Column="0" Margin="10" Style="{StaticResource ButtonStyle}"
                     Visibility="{Binding IsAddButtonVisible, Converter={StaticResource booleanToVisibility}}"
                     Command="{Binding AddCommand}" Click="CloseWindow"/>
 
-            <Button Content="{DynamicResource buttonReset}" Grid.Column="1" Margin="10" 
+            <Button Content="{DynamicResource buttonReset}" Grid.Column="1" Margin="10" Style="{StaticResource ButtonStyle}"
                     Visibility="{Binding IsResetButtonVisible, Converter={StaticResource booleanToVisibility}}"
                     Command="{Binding ResetCommand}" Click="CloseWindow"/>
 
-            <Button Content="{DynamicResource buttonSave}" Grid.Column="0" Margin="10"
+            <Button Content="{DynamicResource buttonSave}" Grid.Column="0" Margin="10" Style="{StaticResource ButtonStyle}"
                     Visibility="{Binding IsSaveButtonVisible, Converter={StaticResource booleanToVisibility}}"
                     Click="CloseWindow"/>
         </Grid>
-        <Button Content="{DynamicResource buttonDelete}" Grid.Column="1" Grid.Row="2" Margin="10" 
+        <Button Content="{DynamicResource buttonDelete}" Grid.Column="1" Grid.Row="2" Margin="10" Style="{StaticResource ButtonStyle}"
                     Visibility="{Binding IsDeleteButtonVisible, Converter={StaticResource booleanToVisibility}}" 
                     Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}" Click="CloseWindow"/>
 

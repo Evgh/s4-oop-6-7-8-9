@@ -16,6 +16,12 @@ namespace s4_oop_6_7_8_9
 {
     partial class ViewModel : INotifyPropertyChanged
     {
+        private Stack<ObservableCollection<Item>> mementoStack;
+        private Stack<ObservableCollection<Item>> redoStack;
+
+        private event Action listChanges;
+
+
         private ObservableCollection<Item> items;
         public ObservableCollection<Item> Items
         {
@@ -113,6 +119,8 @@ namespace s4_oop_6_7_8_9
                             {
                                 Items.Remove(item);
                             }
+
+                            listChanges?.Invoke();
                         },
                         obj =>
                         {
@@ -132,6 +140,11 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             items.Add(buffItem);
+                            
+                            buffItem = ItemFabric.GetEmptyItem();
+                            SelectedItem = buffItem; 
+
+                            listChanges?.Invoke();
                         },
                         obj =>
                         {
@@ -175,6 +188,7 @@ namespace s4_oop_6_7_8_9
                         obj =>
                         {
                             Items.Clear();
+                            listChanges?.Invoke();
                         },
                         obj =>
                         {
@@ -247,10 +261,58 @@ namespace s4_oop_6_7_8_9
             }
         }
 
+
+
+        private RelayCommand undoCommand;
+        public RelayCommand UndoCommand
+        {
+            get
+            {
+                return undoCommand ??
+                    (undoCommand = new RelayCommand(
+                        obj =>
+                        {
+                            if(mementoStack.Count != 0)
+                            {
+                                //redoStack.Push(mementoStack.Pop());
+                                //Items = redoStack.Peek();
+
+                                Items = mementoStack.Pop();
+                            }
+                        }
+                        ));
+            }
+        }
+
+        private RelayCommand redoCommand;
+        public RelayCommand RedoCommand
+        {
+            get
+            {
+                return redoCommand ??
+                    (redoCommand = new RelayCommand(
+                        redoCommand =>
+                        {
+                            if (redoStack.Count != 0)
+                            {
+                                //Items = redoStack.Pop();
+                            }
+                        }
+                        ));
+            }
+        }
+
+
         public ViewModel()
         {
             Items = new ObservableCollection<Item> { };
+            mementoStack = new Stack<ObservableCollection<Item>>();
+            redoStack = new Stack<ObservableCollection<Item>>();
+
+            listChanges += OnListChanges;
             ToEditMode();
+            
+            listChanges?.Invoke();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -258,6 +320,18 @@ namespace s4_oop_6_7_8_9
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public void OnListChanges()
+        {
+            var memento = new ObservableCollection<Item>();
+            foreach(var item in Items)
+            {
+                memento.Add(item);
+            }
+
+            mementoStack.Push(memento);
+            redoStack.Clear();
         }
     }
 

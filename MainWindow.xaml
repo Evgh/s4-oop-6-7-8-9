@@ -13,22 +13,57 @@
             <Setter Property="Control.Background" Value="#A6E1A6"/>
             <Setter Property="Control.FontFamily" Value="Lato"/>
             <Setter Property="Control.FontSize" Value="14"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName= triggerTextBox, Path=Text}" Value="Yellow">
+                    <Setter Property="Control.Background" Value="Yellow"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="FilterStyle" TargetType="StackPanel">
             <Setter Property="Background" Value="#FFDAF1DA"></Setter>
             <Setter Property="Control.FontFamily" Value="Lato Light"/>
         </Style>
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#FF8ABA8A"/>
-            <Setter Property="Control.FontFamily" Value="Lato"/>
+
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Text" Value="Yellow">
+                    <Setter Property="Background" Value="Yellow"/>
+                </Trigger>
+
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Text" Value="Yellow"/>
+                        <Condition Property="IsMouseOver" Value="True"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Foreground" Value="Orange"/>
+                </MultiTrigger>
+
+                <EventTrigger RoutedEvent="GotMouseCapture">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="FontSize" Duration="0:0:1" To="20" AutoReverse="True"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}" Key="O" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding SaveFileCommand}" Key="S" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding ClearAllCommand}" Key="Delete" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding UndoCommand}" Key="Z" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding RedoCommand}" Key="Y" Modifiers="Ctrl"/>
     </Window.InputBindings>
 
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MyCommands.Hi"
+                        Executed="CommandBinding_Executed"></CommandBinding>
+    </Window.CommandBindings>
+    
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Добавить запись" Command="{Binding ToAddModeCommand}" Click="OpenElementWindow"/>
@@ -55,15 +90,19 @@
                 <MenuItem Header="{DynamicResource menuClear}" Command=""/>
             </MenuItem>
             <MenuItem Header="{DynamicResource menuEdit}">
-                <MenuItem Header="{DynamicResource menuUndo}" Command="Undo"/>
-                <MenuItem Header="{DynamicResource menuRedo}" Command="Redo"/>
+                <MenuItem Header="{DynamicResource menuUndo}" Command="{Binding UndoCommand}"/>
+                <MenuItem Header="{DynamicResource menuRedo}" Command="{Binding RedoCommand}"/>
             </MenuItem>
             <MenuItem Header="{DynamicResource menuLanguage}" x:Name="menuLanguage"/>
+            <MenuItem Header="{DynamicResource menuTheme}" x:Name="menuTheme"/>
+
+            <MenuItem Header="Lab 9" Click="MenuItem_Click"/>
+
             <MenuItem Header="{DynamicResource menuSearch}" Command="Search"/>
         </Menu>
 
         <TextBlock Text="{DynamicResource h1}" Grid.Row="1" Grid.Column="0" FontSize="20" Margin="10"/>
-        <Button Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}" Style="{StaticResource ButtonStyle}">
+        <Button Grid.Row="1" Grid.Column="1"  Click="OpenElementWindow" Command="{Binding ToAddModeCommand}">
             <Image Source="resources/icons/add.png"/>
         </Button>
 
@@ -179,7 +218,7 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MinDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBox MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBox x:Name="triggerTextBox" MinWidth="70" DataContext="{Binding Diameter}" Text="{Binding Path=MaxDiameter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </StackPanel>
             </Expander>
 
@@ -190,8 +229,8 @@
                 </StackPanel>
             </Expander>
 
-            <Button Content="{DynamicResource buttonApplyFilters}" Command="{Binding FilterCommand}" Margin="5 5 5 1" Style="{StaticResource ButtonStyle}"/>
-            <Button Content="{DynamicResource buttonClearFilters}" Command="{Binding ClearFilterCommand}" Margin="5 1 5 5" Style="{StaticResource ButtonStyle}"/>
+            <Button Content="{DynamicResource buttonApplyFilters}" Command="{Binding FilterCommand}" Margin="5 5 5 1" />
+            <Button Content="{DynamicResource buttonClearFilters}" Command="{Binding ClearFilterCommand}" Margin="5 1 5 5" />
 
         </StackPanel>
 

@@ -14,6 +14,7 @@
     <v:String x:Key="menuUndo">Отменить</v:String>
     <v:String x:Key="menuRedo">Повторить</v:String>
     <v:String x:Key="menuLanguage">Язык</v:String>
+    <v:String x:Key="menuTheme">Стиль кнопок</v:String>
     <v:String x:Key="menuSearch">Поиск</v:String>
 
     <!-- Контекстное меню по нажатию правой клавиши -->

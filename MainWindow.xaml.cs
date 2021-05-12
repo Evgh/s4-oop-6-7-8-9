@@ -27,6 +27,9 @@ namespace s4_oop_6_7_8_9
             InitializeComponent();
             DataContext = new ViewModel();
 
+            Icon = BitmapFrame.Create(new Uri("D:\\OOP\\s4-oop-6-7-8-9\\resources\\icons\\color.ico"));
+            //Mouse.OverrideCursor = new Cursor("D:\\OOP\\s4-oop-6-7-8-9\\resources\\icons\\poinrter.cur");
+
             App.LanguageChanged += LanguageChanged;
             CultureInfo currLang = App.Language;
            
@@ -41,6 +44,18 @@ namespace s4_oop_6_7_8_9
                 menuLang.Click += ChangeLanguageClick;
                 menuLanguage.Items.Add(menuLang);
             }
+
+            menuTheme.Items.Clear();
+            List<string> themes = new List<string> { "StyleGreen", "StyleOrange" };
+            foreach (var theme in themes)
+            {
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = theme;
+                menuItem.Click += ChangeThemeClick;
+                menuTheme.Items.Add(menuItem);
+            }
+            (menuTheme.Items[0] as MenuItem).RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+
         }
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -51,11 +66,6 @@ namespace s4_oop_6_7_8_9
         {
             ElementWindow elementWindow = new ElementWindow() { DataContext = this.DataContext };
             elementWindow.Show();
-        }
-
-        private void buttonAdd_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show($"{!((ViewModel)DataContext).SelectedItem.IsNull()} \n { ((ViewModel)DataContext).SelectedItem.ItemVisibility} \n { ((ViewModel)DataContext).SelectedItem.FullName}");
         }
 
         private void LanguageChanged(Object sender, EventArgs e)
@@ -81,7 +91,36 @@ namespace s4_oop_6_7_8_9
                     App.Language = lang;
                 }
             }
+        }
 
+        private void ChangeThemeClick(Object sender, EventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                string style = menuItem.Header as string;
+                var uri = new Uri("resources\\" + style + ".xaml", UriKind.Relative);
+                ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+
+                var olduri = new Uri("resources\\" + (style == "StyleGreen" ? "StyleOrange" : "StyleGreen") + ".xaml", UriKind.Relative);
+                ResourceDictionary old = Application.LoadComponent(olduri) as ResourceDictionary;
+
+                Application.Current.Resources.MergedDictionaries.Remove(old);
+                Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+                foreach (MenuItem i in menuTheme.Items)
+                    i.IsChecked = i.Header.Equals(style);
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Lab9Window lab9 = new Lab9Window();
+            lab9.Show();
+        }
+
+        private void CommandBinding_Executed(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hi");
         }
     }
 }
